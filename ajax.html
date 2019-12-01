@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <div>
+    <input type="text" class="input1">
+    <button class="button1">搜索</button>
+    <ul class="list"></ul>
+  </div>
+  <script>
+const API = 'https://api.github.com/search/repositories?q=${keyword}+in:name&sort=stars&order=desc'
+const input = document.querySelector('.input1')
+const button = document.querySelector('.button1')
+const ul = document.querySelector('.list')
+
+button.addEventListener('click',() => {
+  const req = new XMLHttpRequest()
+  const keyword = input.value 
+
+  req.open('GET', API + keyword)
+  req.onreadystatechange = function () {
+  if (req.readyState === 4) {
+    if (req.status === 200) {
+      const json = JSON.parse(req.responseText)
+  
+      console.log(json)
+      console.log(req.responseText)
+      console.log('请求成功')
+    } else {
+      console.log('请求错误')
+    }
+  }
+}
+
+   req.send()
+})
+</script>
+</body>
+</html>
